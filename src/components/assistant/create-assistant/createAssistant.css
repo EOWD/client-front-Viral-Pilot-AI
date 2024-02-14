@@ -1,0 +1,186 @@
+.form-container {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-step {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.form-navigation {
+  margin-top: 20px;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 130px;
+}
+
+@media screen and (max-width: 1024px) {
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .login-rightForm {
+    margin: 0;
+    position: absolute;
+    z-index: 2;
+    background-color: #0a0a0a;
+    padding: 10px 60px 60px;
+    border-radius: 30px;
+  }
+}
+
+/* LEFT IMAGE */
+
+.login-leftContainer {
+  position: relative;
+  margin: 60px 10px;
+}
+
+.login-leftImage {
+  background-image: url("https://cdn.midjourney.com/012c2eea-907e-4d97-b5dc-9cafef08e0bf/0_2.webp");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 25px;
+  width: 500px;
+  height: 700px;
+  z-index: 2;
+}
+
+.blur {
+  background-image: url("https://cdn.midjourney.com/012c2eea-907e-4d97-b5dc-9cafef08e0bf/0_2.webp");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  border-radius: 25px;
+  width: 500px;
+  height: 700px;
+  filter: blur(150px);
+  z-index: 1;
+  top: 0;
+}
+
+/* LOGIN FORM SECTION */
+
+.login-rightForm h2 {
+  font-size: 50px;
+  line-height: 55px;
+  font-weight: 500;
+  margin-bottom: 70px;
+}
+
+.loginForm,
+.loginForm input,
+.loginForm textarea,
+.loginForm button {
+  width: 100%;
+  max-width: 500px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* INPUT STYLING */
+
+.loginForm input,
+.loginButton {
+  box-sizing: border-box;
+}
+
+.loginForm input,
+.loginForm textarea {
+  box-shadow: inset 0px 0px 20px rgba(255, 255, 255, 0.3);
+  background-color: rgb(12, 12, 12);
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 17px 12px;
+  color: white;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+
+.loginForm input,
+.loginForm textarea:focus {
+  background-color: rgb(41, 41, 41);
+  transition: all 0.3s;
+}
+
+.loginForm input,
+.loginForm textarea:valid {
+  border: 2px solid rgb(65, 136, 103);
+  transition: all 0.3s;
+}
+
+.loginForm input::placeholder {
+  color: rgb(66, 66, 66);
+  font-size: 15px;
+  transition: all 0.3s;
+}
+
+/* SINGUP CTA */
+
+.signupCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.signupCta p {
+  font-size: 14px;
+}
+
+/* LOGIN BUTTON */
+
+.loginButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #43464c;
+  color: lightgray;
+  border: 0px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: inset 0px 0px 20px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+.loginButton:hover {
+  transition: all 0.3s;
+  box-shadow: inset 0px 0px 20px rgba(255, 255, 255, 1);
+}
+.loginButton:hover .loginButton-arrow {
+  transition: all 0.3s;
+  transform: rotate(-40deg);
+}
+
+.loginButton-text {
+  width: 90%;
+  margin: auto;
+  font-size: 15px;
+}
+
+.loginButton-arrow {
+  background-color: rgb(19, 19, 19);
+  padding: 8px 10px;
+  border-radius: 100%;
+  font-size: 16px;
+  transition: all 0.3s;
+}

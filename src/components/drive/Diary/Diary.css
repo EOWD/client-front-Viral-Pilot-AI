@@ -1,0 +1,91 @@
+.diaryContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.allEntriesContainer {
+    flex: 0 1 auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-height: calc(100vh - 60px);
+    overflow: auto;
+    max-width: 300px;
+    width: 100%;
+}
+
+.currentlyOpenEntry {
+    flex: 0 1 auto;
+    padding: 50px 60px;
+    background-color: #1a2128;
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+
+/* single entry (list) */
+
+.singleEntry {
+    cursor: pointer;
+    padding: 15px 25px;
+    background-color: #1a2128;
+    border-radius: 10px;
+    border: 1px solid #383e43;
+}
+.singleEntry:hover {
+    background-color: #1f252b;
+}
+
+.singleEntry.selected {
+    border: 1px solid #bec4c9;
+}
+
+
+.editEntry-container {
+    display: none;
+    gap: 10px;
+}
+
+.editEntry-container button {
+    width: 60px;
+    height: 40px;
+}
+
+.entryDate {
+    font-size: 14px;
+    float: right;
+    color: gray;
+    margin-left: 50px;
+}
+
+.entryTextTeaser {
+    font-size: 15px;
+    color: rgb(172, 172, 172);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+}
+
+
+
+
+/* BIG SELECTED */
+
+/* edit title */
+
+.editEntryHeadline-container {
+    display: none;
+    align-items: center;
+    gap: 20px;
+    width: 90%;
+}
+
+/* editInfo */
+.editInfo {
+    position: absolute;
+    right: 30px;
+    color: gray;
+}

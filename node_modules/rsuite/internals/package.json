@@ -1,0 +1,7 @@
+{
+  "name": "rsuite/internals",
+  "private": true,
+  "main": "../cjs/internals/index.js",
+  "module": "../esm/internals/index.js",
+  "types": "../esm/internals/index.d.ts"
+}

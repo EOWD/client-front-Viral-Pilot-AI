@@ -1,0 +1,55 @@
+
+.marketplaceContainer {
+    background-color: #1a1d24;
+    padding-bottom: 30px;
+}
+
+.imageSwiper {
+    max-width: calc(100vw - 350px);
+    margin: 30px 0;
+}
+
+.aboveImageSwiper {
+    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding-top: 30px;
+    max-width: calc(100vw - 350px);
+    margin: auto;
+}
+
+.sliderArrowButtons {
+    display: flex;
+    gap: 50px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* INVIDIVUAL SLIDES */
+
+.aboveImageContent {
+    display: flex;
+    justify-content: space-between;
+    background-color: #292d33;
+    padding: 10px 20px;
+    border-radius: 0 0 10px 10px;
+}
+
+.explorerSingleImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+
+/* POPULAR ARTISTS */
+
+.popArtistSingleImage {
+    max-width: 100%;
+    border-radius: 500px;
+}

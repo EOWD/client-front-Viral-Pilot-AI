@@ -1,0 +1,729 @@
+'use client';
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+exports.__esModule = true;
+exports.default = void 0;
+var _taggedTemplateLiteralLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/taggedTemplateLiteralLoose"));
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
+var _react = _interopRequireWildcard(require("react"));
+var _propTypes = _interopRequireDefault(require("prop-types"));
+var _isUndefined = _interopRequireDefault(require("lodash/isUndefined"));
+var _isNil = _interopRequireDefault(require("lodash/isNil"));
+var _isFunction = _interopRequireDefault(require("lodash/isFunction"));
+var _remove = _interopRequireDefault(require("lodash/remove"));
+var _clone = _interopRequireDefault(require("lodash/clone"));
+var _isArray = _interopRequireDefault(require("lodash/isArray"));
+var _omit = _interopRequireDefault(require("lodash/omit"));
+var _pick = _interopRequireDefault(require("lodash/pick"));
+var _getWidth = _interopRequireDefault(require("dom-lib/getWidth"));
+var _shallowEqual = _interopRequireDefault(require("../utils/shallowEqual"));
+var _treeUtils = require("../utils/treeUtils");
+var _Plaintext = _interopRequireDefault(require("../internals/Plaintext"));
+var _utils = require("../utils");
+var _propTypes2 = require("../internals/propTypes");
+var _getDataGroupBy = require("../utils/getDataGroupBy");
+var _Picker = require("../internals/Picker");
+var _Tag = _interopRequireDefault(require("../Tag"));
+var _InputAutosize = _interopRequireDefault(require("./InputAutosize"));
+var _TextBox = _interopRequireDefault(require("./TextBox"));
+var _InputPickerContext = _interopRequireDefault(require("./InputPickerContext"));
+var _templateObject, _templateObject2, _templateObject3, _templateObject4;
+var convertSize = function convertSize(size) {
+  switch (size) {
+    case 'lg':
+      return 'lg';
+    case 'sm':
+    case 'xs':
+      return 'sm';
+    default:
+      return 'md';
+  }
+};
+/**
+ * Single item selector with text box input.
+ *
+ * @see https://rsuitejs.com/components/input-picker
+ */
+var InputPicker = /*#__PURE__*/_react.default.forwardRef(function (props, ref) {
+  var _merge;
+  var _props$as = props.as,
+    Component = _props$as === void 0 ? 'div' : _props$as,
+    _props$appearance = props.appearance,
+    appearance = _props$appearance === void 0 ? 'default' : _props$appearance,
+    _props$cleanable = props.cleanable,
+    cleanable = _props$cleanable === void 0 ? true : _props$cleanable,
+    _props$cacheData = props.cacheData,
+    cacheData = _props$cacheData === void 0 ? [] : _props$cacheData,
+    _props$classPrefix = props.classPrefix,
+    classPrefix = _props$classPrefix === void 0 ? 'picker' : _props$classPrefix,
+    _props$data = props.data,
+    controlledData = _props$data === void 0 ? [] : _props$data,
+    disabled = props.disabled,
+    readOnly = props.readOnly,
+    plaintext = props.plaintext,
+    defaultValue = props.defaultValue,
+    _props$defaultOpen = props.defaultOpen,
+    defaultOpen = _props$defaultOpen === void 0 ? false : _props$defaultOpen,
+    _props$disabledItemVa = props.disabledItemValues,
+    disabledItemValues = _props$disabledItemVa === void 0 ? [] : _props$disabledItemVa,
+    overrideLocale = props.locale,
+    toggleAs = props.toggleAs,
+    style = props.style,
+    _props$searchable = props.searchable,
+    searchable = _props$searchable === void 0 ? true : _props$searchable,
+    controlledOpen = props.open,
+    placeholder = props.placeholder,
+    groupBy = props.groupBy,
+    menuClassName = props.menuClassName,
+    menuStyle = props.menuStyle,
+    _props$menuAutoWidth = props.menuAutoWidth,
+    menuAutoWidth = _props$menuAutoWidth === void 0 ? true : _props$menuAutoWidth,
+    _props$menuMaxHeight = props.menuMaxHeight,
+    menuMaxHeight = _props$menuMaxHeight === void 0 ? 320 : _props$menuMaxHeight,
+    creatable = props.creatable,
+    shouldDisplayCreateOption = props.shouldDisplayCreateOption,
+    valueProp = props.value,
+    _props$valueKey = props.valueKey,
+    valueKey = _props$valueKey === void 0 ? 'value' : _props$valueKey,
+    virtualized = props.virtualized,
+    _props$labelKey = props.labelKey,
+    labelKey = _props$labelKey === void 0 ? 'label' : _props$labelKey,
+    listProps = props.listProps,
+    id = props.id,
+    tabIndex = props.tabIndex,
+    sort = props.sort,
+    renderMenu = props.renderMenu,
+    renderExtraFooter = props.renderExtraFooter,
+    renderValue = props.renderValue,
+    renderMenuItem = props.renderMenuItem,
+    renderMenuGroup = props.renderMenuGroup,
+    onEnter = props.onEnter,
+    onEntered = props.onEntered,
+    onExit = props.onExit,
+    onExited = props.onExited,
+    onChange = props.onChange,
+    onClean = props.onClean,
+    onCreate = props.onCreate,
+    onSearch = props.onSearch,
+    onSelect = props.onSelect,
+    onOpen = props.onOpen,
+    onClose = props.onClose,
+    onBlur = props.onBlur,
+    onFocus = props.onFocus,
+    searchBy = props.searchBy,
+    _props$placement = props.placement,
+    placement = _props$placement === void 0 ? 'bottomStart' : _props$placement,
+    rest = (0, _objectWithoutPropertiesLoose2.default)(props, ["as", "appearance", "cleanable", "cacheData", "classPrefix", "data", "disabled", "readOnly", "plaintext", "defaultValue", "defaultOpen", "disabledItemValues", "locale", "toggleAs", "style", "searchable", "open", "placeholder", "groupBy", "menuClassName", "menuStyle", "menuAutoWidth", "menuMaxHeight", "creatable", "shouldDisplayCreateOption", "value", "valueKey", "virtualized", "labelKey", "listProps", "id", "tabIndex", "sort", "renderMenu", "renderExtraFooter", "renderValue", "renderMenuItem", "renderMenuGroup", "onEnter", "onEntered", "onExit", "onExited", "onChange", "onClean", "onCreate", "onSearch", "onSelect", "onOpen", "onClose", "onBlur", "onFocus", "searchBy", "placement"]);
+  var _useContext = (0, _react.useContext)(_InputPickerContext.default),
+    multi = _useContext.multi,
+    tagProps = _useContext.tagProps,
+    trigger = _useContext.trigger,
+    disabledOptions = _useContext.disabledOptions,
+    onTagRemove = _useContext.onTagRemove,
+    renderMenuItemCheckbox = _useContext.renderMenuItemCheckbox;
+  if (groupBy === valueKey || groupBy === labelKey) {
+    throw Error('`groupBy` can not be equal to `valueKey` and `labelKey`');
+  }
+  var inputRef = (0, _react.useRef)();
+  var _usePickerRef = (0, _Picker.usePickerRef)(ref),
+    triggerRef = _usePickerRef.trigger,
+    root = _usePickerRef.root,
+    target = _usePickerRef.target,
+    overlay = _usePickerRef.overlay,
+    list = _usePickerRef.list;
+  var _useCustom = (0, _utils.useCustom)(['Picker', 'InputPicker'], overrideLocale),
+    locale = _useCustom.locale;
+  var _useClassNames = (0, _utils.useClassNames)(classPrefix),
+    prefix = _useClassNames.prefix,
+    merge = _useClassNames.merge;
+  var _useState = (0, _react.useState)(controlledData),
+    uncontrolledData = _useState[0],
+    setData = _useState[1];
+  var _useState2 = (0, _react.useState)(100),
+    maxWidth = _useState2[0],
+    setMaxWidth = _useState2[1];
+  var _useState3 = (0, _react.useState)([]),
+    newData = _useState3[0],
+    setNewData = _useState3[1];
+  var _useState4 = (0, _react.useState)(defaultOpen),
+    uncontrolledOpen = _useState4[0],
+    setOpen = _useState4[1];
+  var open = (0, _isUndefined.default)(controlledOpen) ? uncontrolledOpen : controlledOpen;
+  var getAllData = (0, _react.useCallback)(function () {
+    return [].concat(uncontrolledData, newData);
+  }, [uncontrolledData, newData]);
+  var getAllDataAndCache = (0, _react.useCallback)(function () {
+    return [].concat(getAllData(), cacheData);
+  }, [getAllData, cacheData]);
+  var _useControlled = (0, _utils.useControlled)(valueProp, multi ? defaultValue || [] : defaultValue),
+    value = _useControlled[0],
+    setValue = _useControlled[1],
+    isControlled = _useControlled[2];
+  var cloneValue = function cloneValue() {
+    return multi ? (0, _clone.default)(value) || [] : value;
+  };
+  var handleClose = (0, _utils.useEventCallback)(function () {
+    var _triggerRef$current, _target$current, _target$current$focus;
+    triggerRef === null || triggerRef === void 0 ? void 0 : (_triggerRef$current = triggerRef.current) === null || _triggerRef$current === void 0 ? void 0 : _triggerRef$current.close();
+
+    // The focus is on the trigger button after closing
+    (_target$current = target.current) === null || _target$current === void 0 ? void 0 : (_target$current$focus = _target$current.focus) === null || _target$current$focus === void 0 ? void 0 : _target$current$focus.call(_target$current);
+  });
+
+  // Used to hover the focuse item  when trigger `onKeydown`
+  var _useFocusItemValue = (0, _Picker.useFocusItemValue)(multi ? value === null || value === void 0 ? void 0 : value[0] : value, {
+      data: getAllDataAndCache(),
+      valueKey: valueKey,
+      target: function target() {
+        return overlay.current;
+      }
+    }),
+    focusItemValue = _useFocusItemValue.focusItemValue,
+    setFocusItemValue = _useFocusItemValue.setFocusItemValue,
+    onKeyDown = _useFocusItemValue.onKeyDown;
+  var handleSearchCallback = (0, _utils.useEventCallback)(function (searchKeyword, filteredData, event) {
+    var _filteredData$;
+    // The first option after filtering is the focus.
+    setFocusItemValue(disabledOptions ? searchKeyword : (filteredData === null || filteredData === void 0 ? void 0 : (_filteredData$ = filteredData[0]) === null || _filteredData$ === void 0 ? void 0 : _filteredData$[valueKey]) || searchKeyword);
+    onSearch === null || onSearch === void 0 ? void 0 : onSearch(searchKeyword, event);
+  });
+
+  // Use search keywords to filter options.
+  var _useSearch = (0, _Picker.useSearch)(getAllData(), {
+      labelKey: labelKey,
+      searchBy: searchBy,
+      callback: handleSearchCallback
+    }),
+    searchKeyword = _useSearch.searchKeyword,
+    resetSearch = _useSearch.resetSearch,
+    checkShouldDisplay = _useSearch.checkShouldDisplay,
+    handleSearch = _useSearch.handleSearch; // Update the state when the data in props changes
+  (0, _react.useEffect)(function () {
+    if (controlledData && !(0, _shallowEqual.default)(controlledData, uncontrolledData)) {
+      var _controlledData$;
+      setData(controlledData);
+      setNewData([]);
+      setFocusItemValue(controlledData === null || controlledData === void 0 ? void 0 : (_controlledData$ = controlledData[0]) === null || _controlledData$ === void 0 ? void 0 : _controlledData$[valueKey]);
+    }
+  }, [setFocusItemValue, controlledData, uncontrolledData, valueKey]);
+  (0, _react.useEffect)(function () {
+    var _triggerRef$current2;
+    // In multiple selection, you need to set a maximum width for the input.
+    if ((_triggerRef$current2 = triggerRef.current) !== null && _triggerRef$current2 !== void 0 && _triggerRef$current2.root) {
+      setMaxWidth((0, _getWidth.default)(triggerRef.current.root));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Update the position of the menu when the search keyword and value change
+  (0, _react.useEffect)(function () {
+    var _triggerRef$current3, _triggerRef$current3$;
+    (_triggerRef$current3 = triggerRef.current) === null || _triggerRef$current3 === void 0 ? void 0 : (_triggerRef$current3$ = _triggerRef$current3.updatePosition) === null || _triggerRef$current3$ === void 0 ? void 0 : _triggerRef$current3$.call(_triggerRef$current3);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchKeyword, value]);
+  var getDataItem = function getDataItem(value) {
+    // Find active `MenuItem` by `value`
+    var allData = getAllDataAndCache();
+    var activeItem = allData.find(function (item) {
+      return (0, _shallowEqual.default)(item[valueKey], value);
+    });
+    var itemNode = placeholder;
+    if (activeItem !== null && activeItem !== void 0 && activeItem[labelKey]) {
+      itemNode = activeItem === null || activeItem === void 0 ? void 0 : activeItem[labelKey];
+    }
+    return {
+      isValid: !!activeItem,
+      activeItem: activeItem,
+      itemNode: itemNode
+    };
+  };
+  var getInput = function getInput() {
+    var _inputRef$current;
+    return multi ? (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 ? void 0 : _inputRef$current.input : inputRef.current;
+  };
+  var focusInput = function focusInput() {
+    var _getInput;
+    return (_getInput = getInput()) === null || _getInput === void 0 ? void 0 : _getInput.focus();
+  };
+  var blurInput = function blurInput() {
+    var _getInput2;
+    return (_getInput2 = getInput()) === null || _getInput2 === void 0 ? void 0 : _getInput2.blur();
+  };
+
+  /**
+   * Convert the string of the newly created option into an object.
+   */
+  var createOption = function createOption(value) {
+    var _ref2;
+    if (groupBy) {
+      var _ref;
+      return _ref = {
+        create: true
+      }, _ref[groupBy] = locale === null || locale === void 0 ? void 0 : locale.newItem, _ref[valueKey] = value, _ref[labelKey] = value, _ref;
+    }
+    return _ref2 = {
+      create: true
+    }, _ref2[valueKey] = value, _ref2[labelKey] = value, _ref2;
+  };
+  var handleChange = (0, _utils.useEventCallback)(function (value, event) {
+    onChange === null || onChange === void 0 ? void 0 : onChange(value, event);
+  });
+  var handleRemoveItemByTag = (0, _utils.useEventCallback)(function (tag, event) {
+    event.stopPropagation();
+    var val = cloneValue();
+    (0, _remove.default)(val, function (itemVal) {
+      return (0, _shallowEqual.default)(itemVal, tag);
+    });
+    setValue(val);
+    handleChange(val, event);
+    onTagRemove === null || onTagRemove === void 0 ? void 0 : onTagRemove(tag, event);
+  });
+  var handleSelect = (0, _utils.useEventCallback)(function (value, item, event) {
+    onSelect === null || onSelect === void 0 ? void 0 : onSelect(value, item, event);
+    if (creatable && item.create) {
+      delete item.create;
+      onCreate === null || onCreate === void 0 ? void 0 : onCreate(value, item, event);
+      setNewData(newData.concat(item));
+    }
+  });
+
+  /**
+   * Callback triggered by single selection
+   * @param value
+   * @param item
+   * @param event
+   */
+  var handleSelectItem = (0, _utils.useEventCallback)(function (value, item, event) {
+    setValue(value);
+    setFocusItemValue(value);
+    resetSearch();
+    handleSelect(value, item, event);
+    handleChange(value, event);
+    handleClose();
+  });
+
+  /**
+   * Callback triggered by multiple selection
+   * @param nextItemValue
+   * @param item
+   * @param event
+   * @param checked
+   */
+  var handleCheckTag = (0, _utils.useEventCallback)(function (nextItemValue, item, event, checked) {
+    var val = cloneValue();
+    if (checked) {
+      val.push(nextItemValue);
+    } else {
+      (0, _remove.default)(val, function (itemVal) {
+        return (0, _shallowEqual.default)(itemVal, nextItemValue);
+      });
+    }
+    setValue(val);
+    resetSearch();
+    setFocusItemValue(nextItemValue);
+    handleSelect(val, item, event);
+    handleChange(val, event);
+    focusInput();
+  });
+  var handleTagKeyPress = (0, _utils.useEventCallback)(function (event) {
+    // When composing, ignore the keypress event.
+    if (event.nativeEvent.isComposing) {
+      return;
+    }
+    var val = cloneValue();
+    var data = getAllData();
+    if (!focusItemValue || !data) {
+      return;
+    }
+
+    // If the value is disabled in this option, it is returned.
+    if (disabledItemValues !== null && disabledItemValues !== void 0 && disabledItemValues.some(function (item) {
+      return item === focusItemValue;
+    })) {
+      return;
+    }
+    if (!val.some(function (v) {
+      return (0, _shallowEqual.default)(v, focusItemValue);
+    })) {
+      val.push(focusItemValue);
+    } else if (!disabledOptions) {
+      (0, _remove.default)(val, function (itemVal) {
+        return (0, _shallowEqual.default)(itemVal, focusItemValue);
+      });
+    }
+    var focusItem = data.find(function (item) {
+      return (0, _shallowEqual.default)(item === null || item === void 0 ? void 0 : item[valueKey], focusItemValue);
+    });
+    if (!focusItem) {
+      focusItem = createOption(focusItemValue);
+    }
+    setValue(val);
+    resetSearch();
+    handleSelect(val, focusItem, event);
+    handleChange(val, event);
+  });
+  var handleMenuItemKeyPress = (0, _utils.useEventCallback)(function (event) {
+    if (!focusItemValue || !controlledData) {
+      return;
+    }
+
+    // If the value is disabled in this option, it is returned.
+    if (disabledItemValues !== null && disabledItemValues !== void 0 && disabledItemValues.some(function (item) {
+      return item === focusItemValue;
+    })) {
+      return;
+    }
+
+    // Find active `MenuItem` by `value`
+    var allData = getAllData();
+    var focusItem = allData.find(function (item) {
+      return (0, _shallowEqual.default)(item[valueKey], focusItemValue);
+    });
+
+    // FIXME Bad state flow
+    if (!focusItem && focusItemValue === searchKeyword) {
+      focusItem = createOption(searchKeyword);
+    }
+    setValue(focusItemValue);
+    resetSearch();
+    if (focusItem) {
+      handleSelect(focusItemValue, focusItem, event);
+    }
+    handleChange(focusItemValue, event);
+    handleClose();
+  });
+
+  /**
+   * Remove the last item, after pressing the back key on the keyboard.
+   * @param event
+   */
+  var removeLastItem = (0, _utils.useEventCallback)(function (event) {
+    var target = event === null || event === void 0 ? void 0 : event.target;
+    if ((target === null || target === void 0 ? void 0 : target.tagName) !== 'INPUT') {
+      focusInput();
+      return;
+    }
+    if ((target === null || target === void 0 ? void 0 : target.tagName) === 'INPUT' && target !== null && target !== void 0 && target.value) {
+      return;
+    }
+    var val = cloneValue();
+    val.pop();
+    setValue(val);
+    handleChange(val, event);
+  });
+  var handleClean = (0, _utils.useEventCallback)(function (event) {
+    if (disabled || searchKeyword !== '') {
+      return;
+    }
+    setValue(null);
+    setFocusItemValue(null);
+    resetSearch();
+    if (multi) {
+      handleChange([], event);
+    } else {
+      handleChange(null, event);
+    }
+    onClean === null || onClean === void 0 ? void 0 : onClean(event);
+  });
+  var events = {
+    onMenuPressBackspace: multi ? removeLastItem : handleClean,
+    onMenuKeyDown: onKeyDown,
+    onMenuPressEnter: undefined,
+    onKeyDown: undefined
+  };
+  var handleKeyPress = (0, _utils.useEventCallback)(function (event) {
+    // When typing a space, create a tag.
+    if ((0, _utils.isOneOf)('Space', trigger) && event.key === _utils.KEY_VALUES.SPACE) {
+      handleTagKeyPress(event);
+      event.preventDefault();
+    }
+
+    // When typing a comma, create a tag.
+    if ((0, _utils.isOneOf)('Comma', trigger) && event.key === _utils.KEY_VALUES.COMMA) {
+      handleTagKeyPress(event);
+      event.preventDefault();
+    }
+  });
+  if (multi) {
+    if ((0, _utils.isOneOf)('Enter', trigger)) {
+      events.onMenuPressEnter = handleTagKeyPress;
+    }
+    if (creatable) {
+      events.onKeyDown = handleKeyPress;
+    }
+  } else {
+    events.onMenuPressEnter = handleMenuItemKeyPress;
+  }
+  var onPickerKeyDown = (0, _Picker.useToggleKeyDownEvent)((0, _extends2.default)({
+    trigger: triggerRef,
+    target: target,
+    overlay: overlay
+  }, events, rest));
+  var handleExited = (0, _utils.useEventCallback)(function () {
+    setFocusItemValue(multi ? value === null || value === void 0 ? void 0 : value[0] : value);
+    resetSearch();
+    onClose === null || onClose === void 0 ? void 0 : onClose();
+  });
+  var handleFocus = (0, _utils.useEventCallback)(function () {
+    if (!readOnly) {
+      var _triggerRef$current4;
+      setOpen(true);
+      (_triggerRef$current4 = triggerRef.current) === null || _triggerRef$current4 === void 0 ? void 0 : _triggerRef$current4.open();
+    }
+  });
+  var handleEnter = (0, _utils.useEventCallback)(function () {
+    focusInput();
+    setOpen(true);
+  });
+  var handleExit = (0, _utils.useEventCallback)(function () {
+    blurInput();
+    setOpen(false);
+  });
+  var renderListItem = function renderListItem(label, item) {
+    // 'Create option "{0}"' =>  Create option "xxxxx"
+    var newLabel = item.create ? /*#__PURE__*/_react.default.createElement("span", null, (0, _utils.tplTransform)(locale.createOption, label)) : label;
+    return renderMenuItem ? renderMenuItem(newLabel, item) : newLabel;
+  };
+  var checkValue = function checkValue() {
+    if (multi) {
+      return {
+        isValid: false,
+        itemNode: null
+      };
+    }
+    var dataItem = getDataItem(value);
+    var itemNode = dataItem.itemNode;
+    if (!(0, _isNil.default)(value) && (0, _isFunction.default)(renderValue)) {
+      itemNode = renderValue(value, dataItem.activeItem, itemNode);
+    }
+    return {
+      isValid: dataItem.isValid,
+      itemNode: itemNode
+    };
+  };
+  var renderMultiValue = function renderMultiValue() {
+    if (!multi) {
+      return null;
+    }
+    var _tagProps$closable = tagProps.closable,
+      closable = _tagProps$closable === void 0 ? true : _tagProps$closable,
+      onClose = tagProps.onClose,
+      tagRest = (0, _objectWithoutPropertiesLoose2.default)(tagProps, ["closable", "onClose"]);
+    var tags = value || [];
+    var items = [];
+    var tagElements = tags.map(function (tag) {
+      var _getDataItem = getDataItem(tag),
+        isValid = _getDataItem.isValid,
+        itemNode = _getDataItem.itemNode,
+        activeItem = _getDataItem.activeItem;
+      items.push(activeItem);
+      if (!isValid) {
+        return null;
+      }
+      return /*#__PURE__*/_react.default.createElement(_Tag.default, (0, _extends2.default)({
+        role: "option"
+      }, tagRest, {
+        key: tag,
+        size: convertSize(rest.size),
+        closable: !disabled && closable && !readOnly && !plaintext,
+        title: typeof itemNode === 'string' ? itemNode : undefined,
+        onClose: (0, _utils.createChainedFunction)(handleRemoveItemByTag.bind(null, tag), onClose)
+      }), itemNode);
+    }).filter(function (item) {
+      return item !== null;
+    });
+    if ((tags.length > 0 || isControlled) && (0, _isFunction.default)(renderValue)) {
+      return renderValue(value, items, tagElements);
+    }
+    return tagElements;
+  };
+  var renderPopup = function renderPopup(positionProps, speakerRef) {
+    var left = positionProps.left,
+      top = positionProps.top,
+      className = positionProps.className;
+    var menuClassPrefix = multi ? 'picker-check-menu' : 'picker-select-menu';
+    var classes = merge(className, menuClassName, prefix(multi ? 'check-menu' : 'select-menu'));
+    var styles = (0, _extends2.default)({}, menuStyle, {
+      left: left,
+      top: top
+    });
+    var items = (0, _treeUtils.filterNodesOfTree)(getAllData(), checkShouldDisplay);
+    if (creatable && (typeof shouldDisplayCreateOption === 'function' ? shouldDisplayCreateOption(searchKeyword, items) : searchKeyword && !items.find(function (item) {
+      return item[valueKey] === searchKeyword;
+    }))) {
+      items = [].concat(items, [createOption(searchKeyword)]);
+    }
+
+    // Create a tree structure data when set `groupBy`
+    if (groupBy) {
+      items = (0, _getDataGroupBy.getDataGroupBy)(items, groupBy, sort);
+    } else if (typeof sort === 'function') {
+      items = items.sort(sort(false));
+    }
+    if (disabledOptions) {
+      return /*#__PURE__*/_react.default.createElement(_Picker.PickerPopup, {
+        ref: (0, _utils.mergeRefs)(overlay, speakerRef)
+      });
+    }
+    var menu = items.length ? /*#__PURE__*/_react.default.createElement(_Picker.Listbox, {
+      listProps: listProps,
+      listRef: list,
+      disabledItemValues: disabledItemValues,
+      valueKey: valueKey,
+      labelKey: labelKey,
+      classPrefix: menuClassPrefix,
+      listItemClassPrefix: multi ? undefined : menuClassPrefix + "-item",
+      listItemAs: multi ? _Picker.ListCheckItem : _Picker.ListItem,
+      listItemProps: {
+        renderMenuItemCheckbox: renderMenuItemCheckbox
+      },
+      activeItemValues: multi ? value : [value],
+      focusItemValue: focusItemValue,
+      maxHeight: menuMaxHeight,
+      data: items
+      // FIXME-Doma
+      // `group` is redundant so long as `groupBy` exists
+      ,
+      group: !(0, _isUndefined.default)(groupBy),
+      groupBy: groupBy,
+      onSelect: multi ? handleCheckTag : handleSelectItem // fixme don't use any
+      ,
+      renderMenuGroup: renderMenuGroup,
+      renderMenuItem: renderListItem,
+      virtualized: virtualized
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: prefix(_templateObject || (_templateObject = (0, _taggedTemplateLiteralLoose2.default)(["none"])))
+    }, locale === null || locale === void 0 ? void 0 : locale.noResultsText);
+    return /*#__PURE__*/_react.default.createElement(_Picker.PickerPopup, {
+      ref: (0, _utils.mergeRefs)(overlay, speakerRef),
+      autoWidth: menuAutoWidth,
+      className: classes,
+      style: styles,
+      target: triggerRef,
+      onKeyDown: onPickerKeyDown
+    }, renderMenu ? renderMenu(menu) : menu, renderExtraFooter === null || renderExtraFooter === void 0 ? void 0 : renderExtraFooter());
+  };
+  var _checkValue = checkValue(),
+    isValid = _checkValue.isValid,
+    itemNode = _checkValue.itemNode;
+  var tagElements = renderMultiValue();
+
+  /**
+   * 1.Have a value and the value is valid.
+   * 2.Regardless of whether the value is valid, as long as renderValue is set, it is judged to have a value.
+   * 3.If renderValue returns null or undefined, hasValue is false.
+   */
+  var hasSingleValue = !(0, _isNil.default)(value) && (0, _isFunction.default)(renderValue) && !(0, _isNil.default)(itemNode);
+  var hasMultiValue = (0, _isArray.default)(value) && value.length > 0 && (0, _isFunction.default)(renderValue) && !(0, _isNil.default)(tagElements);
+  var hasValue = multi ? !!(tagElements !== null && tagElements !== void 0 && tagElements.length) || hasMultiValue : isValid || hasSingleValue;
+  var _usePickerClassName = (0, _Picker.usePickerClassName)((0, _extends2.default)({}, props, {
+      classPrefix: classPrefix,
+      appearance: appearance,
+      hasValue: hasValue,
+      name: 'input',
+      cleanable: cleanable
+    })),
+    pickerClasses = _usePickerClassName[0],
+    usedClassNamePropKeys = _usePickerClassName[1];
+  var classes = merge(pickerClasses, (_merge = {}, _merge[prefix(_templateObject2 || (_templateObject2 = (0, _taggedTemplateLiteralLoose2.default)(["tag"])))] = multi, _merge[prefix(_templateObject3 || (_templateObject3 = (0, _taggedTemplateLiteralLoose2.default)(["focused"])))] = open, _merge[prefix(_templateObject4 || (_templateObject4 = (0, _taggedTemplateLiteralLoose2.default)(["disabled-options"])))] = disabledOptions, _merge));
+  var searching = !!searchKeyword && open;
+  var editable = searchable && !disabled && !rest.loading;
+  var inputProps = multi ? {
+    inputStyle: {
+      maxWidth: maxWidth - 63
+    },
+    as: _InputAutosize.default
+  } : {
+    as: 'input'
+  };
+  if (plaintext) {
+    var plaintextProps = {};
+
+    // TagPicker has -6px margin-left on the plaintext wrapper
+    // for fixing margin-left on tags from 2nd line on
+    if (multi && hasValue) {
+      plaintextProps.style = {
+        marginLeft: -6
+      };
+    }
+    return /*#__PURE__*/_react.default.createElement(_Plaintext.default, (0, _extends2.default)({
+      localeKey: "notSelected",
+      ref: target
+    }, plaintextProps), itemNode || (tagElements !== null && tagElements !== void 0 && tagElements.length ? tagElements : null) || placeholder);
+  }
+  var placeholderNode = placeholder || (disabledOptions ? null : locale === null || locale === void 0 ? void 0 : locale.placeholder);
+  return /*#__PURE__*/_react.default.createElement(_Picker.PickerToggleTrigger, {
+    id: id,
+    multiple: multi,
+    pickerProps: (0, _pick.default)(props, _Picker.pickTriggerPropKeys),
+    ref: triggerRef,
+    trigger: "active",
+    onEnter: (0, _utils.createChainedFunction)(handleEnter, onEnter),
+    onEntered: (0, _utils.createChainedFunction)(onEntered, onOpen),
+    onExit: (0, _utils.createChainedFunction)(handleExit, onExit),
+    onExited: (0, _utils.createChainedFunction)(handleExited, onExited),
+    speaker: renderPopup,
+    placement: placement
+  }, /*#__PURE__*/_react.default.createElement(Component, {
+    className: classes,
+    style: style,
+    onClick: focusInput,
+    onKeyDown: onPickerKeyDown,
+    ref: root
+  }, /*#__PURE__*/_react.default.createElement(_Picker.PickerToggle, (0, _extends2.default)({}, (0, _omit.default)(rest, [].concat(_Picker.omitTriggerPropKeys, usedClassNamePropKeys)), {
+    appearance: appearance,
+    readOnly: readOnly,
+    plaintext: plaintext,
+    ref: target,
+    as: toggleAs,
+    tabIndex: tabIndex,
+    onClean: handleClean,
+    cleanable: cleanable && !disabled,
+    hasValue: hasValue,
+    active: open,
+    disabled: disabled,
+    placement: placement,
+    inputValue: value,
+    focusItemValue: focusItemValue,
+    caret: !disabledOptions
+  }), searching || multi && hasValue ? null : itemNode || placeholderNode), /*#__PURE__*/_react.default.createElement(_TextBox.default, {
+    showTagList: hasValue && multi,
+    tags: tagElements,
+    editable: editable,
+    readOnly: readOnly,
+    disabled: disabled,
+    multiple: multi,
+    onBlur: onBlur,
+    onFocus: (0, _utils.createChainedFunction)(handleFocus, onFocus),
+    inputRef: inputRef,
+    onChange: handleSearch,
+    inputValue: open ? searchKeyword : '',
+    inputProps: inputProps
+  })));
+});
+InputPicker.displayName = 'InputPicker';
+InputPicker.propTypes = (0, _extends2.default)({}, _Picker.listPickerPropTypes, {
+  locale: _propTypes.default.any,
+  appearance: (0, _propTypes2.oneOf)(['default', 'subtle']),
+  cacheData: _propTypes.default.array,
+  menuAutoWidth: _propTypes.default.bool,
+  menuMaxHeight: _propTypes.default.number,
+  searchable: _propTypes.default.bool,
+  creatable: _propTypes.default.bool,
+  groupBy: _propTypes.default.any,
+  sort: _propTypes.default.func,
+  renderMenu: _propTypes.default.func,
+  renderMenuItem: _propTypes.default.func,
+  renderMenuGroup: _propTypes.default.func,
+  onCreate: _propTypes.default.func,
+  onSelect: _propTypes.default.func,
+  onGroupTitleClick: _propTypes.default.func,
+  onSearch: _propTypes.default.func,
+  virtualized: _propTypes.default.bool,
+  searchBy: _propTypes.default.func
+});
+var _default = InputPicker;
+exports.default = _default;

@@ -1,0 +1,9 @@
+#main {
+    flex-grow: 1;
+    transition: all 0.3s;
+    margin: 0px 0px;
+}
+
+#guestMain {
+    margin: auto;
+}

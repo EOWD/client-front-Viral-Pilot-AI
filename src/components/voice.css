@@ -1,0 +1,378 @@
+/* VOICE ASSISTANT BUTTON */
+
+.voiceAssistant-buttonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50px);
+    background-color: rgb(14, 14, 14);
+    padding: 20px 40px;
+    border-radius: 20px;
+    z-index: 11;
+    gap: 20px;
+    box-shadow: 0 0 20px #0000009e;
+    transition: all 0.3s;
+    --offset: 3px;
+    overflow: hidden;
+}
+
+.voiceAssistant-buttonWrapper.isRecording {
+    box-shadow: 0 -40px 80px #000;
+    transition: all 0.3s;
+}
+
+.voiceAssistant-buttonWrapper.isSpeaking {
+    box-shadow: 80px 0px 60px #000;
+    transition: all 0.3s;
+}
+
+/* border animation */
+.voiceAssistant-buttonWrapper.isThinking::before, 
+.voiceAssistant-buttonWrapper.isThinking::after { 
+    display: block;
+}
+
+.voiceAssistant-buttonWrapper::before { 
+    display: none;
+    content: '';
+    background: conic-gradient(transparent 270deg, white, transparent);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1;
+    width: 100%;
+    animation: rotate 2s linear infinite;
+}
+
+.voiceAssistant-buttonWrapper::after {
+    display: none;
+    content: '';
+    background: inherit;
+    border-radius: inherit;
+    position: absolute;
+    inset: var(--offset);
+    height: calc(100% - 2 * var(--offset));
+    width: calc(100% - 2 * var(--offset));
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
+    }
+}
+
+
+/* sendStatus - error */
+
+.sendStatus-error {
+    position: absolute;
+    top: -150px;
+    left: -60px;
+    width: 300px;
+    background-color: gray;
+    padding: 10px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+
+/* trash & countdown */
+
+.deleteRecording {
+    cursor: pointer;
+    right: 25%;
+}
+.deleteRecording svg {
+    transition: all 0.3s;
+    stroke: gray;
+}
+.deleteRecording:hover svg {
+    transition: all 0.3s;
+    stroke: rgb(255, 255, 255);
+}
+
+.deleteRecording,
+.recordingCountdown {
+    position: absolute;
+    z-index: 12;
+    transition: all 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    margin-top: -93px;
+    left: 130px;
+}
+
+.recordingCountdown {
+    color: gray;
+    margin-top: -95px;
+    min-width: 30px;
+    pointer-events: none;
+    user-select: none;
+    left: 30px;
+}
+
+.isRecording .deleteRecording,
+.isRecording .recordingCountdown {
+    transition: all 0.3s;
+    opacity: 1;
+    pointer-events: auto;
+}
+.isRecording .recordingCountdown {
+    animation: right-to-left 0.5s;
+}
+.isRecording .deleteRecording {
+    animation: left-to-right 0.5s;
+}
+
+@keyframes left-to-right {
+    0% {
+        transform: translateX(-20px) translateY(40px);
+    }
+    100% {
+        transform: translateX(0px) translateY(0px);
+    }
+}
+@keyframes right-to-left {
+    0% {
+        transform: translateX(20px) translateY(40px);
+    }
+    100% {
+        transform: translateX(0px) translateY(0px);
+    }
+}
+
+
+/* send recording button */
+
+.sendRecording.disabled {
+    pointer-events: none;
+}
+.sendRecording.disabled svg {
+    stroke: rgb(59, 59, 59);
+}
+
+.sendRecording {
+    padding: 11px 12px 9px;
+    border-radius: 30px;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
+}
+.sendRecording svg {
+    transition: all 0.3s;
+    stroke: gray;
+}
+.sendRecording:hover svg {
+    transition: all 0.3s;
+    stroke: rgb(255, 255, 255);
+}
+
+
+/* chatLog Button */
+.chatLogToggle {
+    padding: 11px 12px 9px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.chatLogToggle svg {
+    transition: all 0.3s;
+    stroke: gray;
+}
+.chatLogToggle:hover svg {
+    transition: all 0.3s;
+    stroke: rgb(255, 255, 255);
+}
+
+
+/* acutal recording button */
+.voiceAssistant-button {
+    transition: all 0.3s;
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+    border: 0px;
+    background: linear-gradient(109.6deg, rgb(245, 239, 249) 30.1%, rgb(207, 211, 236) 100.2%);
+    padding: 11px 12px 9px;
+    border-radius: 100%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+.voiceAssistant-button:hover {
+    transition: all 0.3s;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.7);
+}
+
+.voiceAssistant-button svg {
+    transition: all 0.2s;
+    stroke: rgb(30, 33, 48);
+}
+
+.voiceAssistant-button .recording {
+    transition: all 0.2s;
+    stroke: rgb(255, 0, 0);
+}
+
+.isRecording button.voiceAssistant-button {
+    animation: wave-outwards 1.5s infinite;
+}
+
+@keyframes wave-outwards {
+    0% {
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+    }
+    100% {
+      box-shadow: 0 0 20px 20px rgba(255, 255, 255, 0);
+    }
+}
+
+
+
+/* GENERATE IMAGE PREVIEW */
+
+.generatedImage-component.hidden {
+    display: none;
+}
+
+.generatedImage-component {
+    position: fixed;
+    top: 0;
+    padding-top: 5rem;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    z-index: 5;
+}
+
+.closePopup {
+    position: absolute;
+    right: 20%
+}
+
+/* ACTUAL CHAT LOG */
+
+.chatLog {
+    display: none;
+    position: fixed;
+    flex-direction: column;
+    bottom: 160px;
+    left: 50%;
+    background-color: rgb(14, 14, 14);
+    padding: 10px 0px;
+    border-radius: 20px;
+    transform: translateX(-40%);
+    max-height: 75%;
+    overflow: auto;
+    z-index: 10;
+    box-shadow: 0 0 200px black;
+}
+
+.chatLog.loading {
+    width: 50%;
+    height: 50%;
+}
+
+.lds-roller {
+    transform: translateX(-50%);
+}
+
+.userMessage {
+    color: #d4d4d4;
+    text-align: right;
+    padding: 12px 50px;
+}
+
+.assistantMessage {
+    /* color: green; */
+    background-color: #e0e0e00c;
+    padding: 12px 50px;
+}
+.assistantMessage.linkedImage a {
+    color: rgb(128, 128, 255);
+}
+.assistantMessage.linkedImage {
+    padding-top: 17px;
+    padding-bottom: 0;
+}
+
+.chatRole {
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-top: 0px;
+}
+
+.chatLog-messages {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.copyChatMessage {
+    margin-top: 8px;
+    stroke: gray;
+    font-size: 8px;
+}
+
+
+/* secondsDeleteStop-buttonsContainer */
+
+.secondsDeleteStop-buttonsContainer {
+    position: absolute;
+    bottom: 105px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 14;
+}
+
+
+/* Stop audio play button */
+
+.stopAudioPlay {
+    transition: all 0.3s;
+    display: none;
+    position: absolute;
+    left: 225px;
+    margin-left: 15px;
+    background-color: transparent;
+    margin-top: -15px;
+}
+
+.stopAudioPlay.isSpeaking {
+    transition: all 0.3s;
+    display: inline-flex;
+    animation: stop_left-to-right 0.5s;
+}
+.stopAudioPlay.isSpeaking svg {
+    stroke: gray;
+    transition: all 0.3s;
+}
+.stopAudioPlay.isSpeaking:hover svg {
+    stroke: white;
+    transition: all 0.3s;
+}
+
+@keyframes stop_left-to-right {
+    0% {
+        transform: translateX(-20px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+
+/* close status window */
+
+.closeStatus {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    cursor: pointer;
+}

@@ -1,0 +1,58 @@
+html, body, #root, #root > div {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000;
+}
+
+:root, p, a, h1, h2, h3, h4, h5, h6 {
+    font-family: "Sarabun";
+    color: #fff;
+
+    /* COLORS */
+    --primary-color: #53a554;
+
+    --hover-gray: rgba(255, 255, 255, 0.8);
+    --hover-button-color: rgb(89, 89, 89, 0.6);
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+p {
+    font-size: 18px;
+}
+
+/* BASICS */
+
+em {
+    font-family: "Sarabun";
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:active, a:focus, a:hover {
+    text-decoration: none !important;
+}
+
+/* REUSABLE */
+
+.btnHover:hover {
+    background-color: var(--hover-gray);
+}
+
+/* LOGO */
+
+.logoBorder {
+    border: 2px solid #fff;
+    padding: 0px 6px 2px;
+    border-radius: 10px;
+}
